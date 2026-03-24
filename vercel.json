@@ -1,0 +1,6 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/((?!calcolatore\\.html|PRATICARAPIDA\\.png|assets/).*)", "destination": "/index.html" }
+  ]
+}
