@@ -413,7 +413,7 @@ function PreventivoPage({ setPage }) {
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "24px 16px 0" }}>
           <div style={{ background: "#fff8e1", border: "1px solid #f9a825", borderLeft: "4px solid #f9a825", borderRadius: 12, padding: "16px 20px", marginBottom: 24, fontFamily: "'DM Sans', sans-serif", fontSize: 14, lineHeight: 1.6, color: "#7c5c00", display: "flex", gap: 12, alignItems: "flex-start" }}>
             <span style={{ fontSize: 20, flexShrink: 0 }}>⚠️</span>
-            <div><strong>Attenzione:</strong> questo calcolatore è ancora in fase di test. I risultati sono indicativi e calcolati sulla base delle formule del D.M. 7 agosto 2025. L'incentivo effettivo è soggetto a verifica da parte del GSE.</div>
+            <div><strong>Attenzione:</strong> i risultati sono indicativi e calcolati sulla base delle formule del D.M. 7 agosto 2025. L'incentivo effettivo è soggetto a verifica da parte del GSE.</div>
           </div>
           <iframe
             ref={iframeRef}

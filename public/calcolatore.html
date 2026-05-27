@@ -886,7 +886,14 @@ function buildForm(v) {
         inputRow('scop1','SCOP – Coeff. prestazione stagionale','adim.','zona climatica average') +
         inputRow('scopmin1','SCOP_min Ecodesign','adim.','minimo per immissione sul mercato') +
         inputRow('zona1','Zona climatica',zonaOptions,'','select') +
-        inputRow('ci1','Ci – Coeff. valorizzazione','€/kWht','dalla Tabella 9: es. aria/acqua ≤35kW → 0,150') +
+        inputRow('scambio1','Tipologia PdC',`<option value="">— Seleziona tipologia —</option>
+<option value="aria_acqua">Aria/acqua</option>
+<option value="acqua_aria">Acqua/aria</option>
+<option value="acqua_acqua">Acqua/acqua (geotermica)</option>
+<option value="salamoia_acqua">Salamoia/acqua (geotermica)</option>
+<option value="split_multisplit">Split / Multisplit</option>
+<option value="vrf_vrv">VRF / VRV</option>
+<option value="rooftop">Rooftop</option>`,'Ci calcolato automaticamente dalla Tabella 9','select') +
         inputRow('spesa1','Spesa sostenuta per l\'intervento','€','costo totale impianto+installazione') +
         inputRow('gen1','Generatore sostituito',`<option value="">— Seleziona generatore sostituito —</option>
 <option value="gas">Caldaia a gas</option>
@@ -960,7 +967,11 @@ function buildForm(v) {
         inputRow('sper3','SPER – Coeff. prestazione stagionale gas','adim.','zona average') +
         inputRow('spermin3','SPER_min Ecodesign','adim.','minimo per immissione sul mercato') +
         inputRow('zona3','Zona climatica',zonaOptions,'','select') +
-        inputRow('ci3','Ci – dalla Tabella 9 (tipo PDC gas)','€/kWht','es. aria/acqua ≤35kW → 0,150') +
+        inputRow('scambio3','Tipologia PdC a gas',`<option value="">— Seleziona tipologia —</option>
+<option value="aria_acqua">Aria/acqua</option>
+<option value="acqua_aria">Acqua/aria</option>
+<option value="acqua_acqua">Acqua/acqua (geotermica)</option>
+<option value="salamoia_acqua">Salamoia/acqua (geotermica)</option>`,'Ci calcolato automaticamente dalla Tabella 9','select') +
         inputRow('spesa3','Spesa sostenuta per l\'intervento','€','costo totale impianto+installazione') +
         inputRow('gen3','Generatore sostituito',`<option value="">— Seleziona generatore sostituito —</option>
 <option value="gas">Caldaia a gas</option>
@@ -1182,7 +1193,11 @@ function buildForm(v) {
         inputRow('scop8','SCOP – Coeff. prestazione stagionale PDC','adim.') +
         inputRow('scopmin8','SCOP_min Ecodesign','adim.') +
         inputRow('zona8','Zona climatica',zonaOptions,'','select') +
-        inputRow('ci8','Ci – dalla Tabella 9 (tipo PDC)','€/kWht') +
+        inputRow('scambio8','Tipologia PdC (ibrido)',`<option value="">— Seleziona tipologia —</option>
+<option value="aria_acqua">Aria/acqua</option>
+<option value="acqua_aria">Acqua/aria</option>
+<option value="acqua_acqua">Acqua/acqua (geotermica)</option>
+<option value="salamoia_acqua">Salamoia/acqua (geotermica)</option>`,'Ci calcolato automaticamente dalla Tabella 9','select') +
         inputRow('k8','k – dalla tabella sopra','adim.','es. 1,25 per ibrido factory made') +
         inputRow('spesa8','Spesa sostenuta per l\'intervento','€','costo totale impianto+installazione') +
         inputRow('gen8','Generatore sostituito',`<option value="">— Seleziona generatore sostituito —</option>
@@ -1407,8 +1422,9 @@ function calc(v) {
 
     case 1: {
       const pr = gn('pr1'), scop = gn('scop1'), scopmin = gn('scopmin1'),
-            zona = g('zona1'), ci = gn('ci1'), spesa = gn('spesa1'), gen = g('gen1');
-      if (!pr||!scop||!scopmin||!zona||!ci) { warn(1,'Compila tutti i campi obbligatori.'); return; }
+            zona = g('zona1'), scambio = g('scambio1'), spesa = gn('spesa1'), gen = g('gen1');
+      if (!pr||!scop||!scopmin||!zona||!scambio) { warn(1,'Compila tutti i campi obbligatori (inclusa la tipologia di PdC).'); return; }
+      const ci = getCiPDC(scambio, pr);
       if (!gen) { warn(1,'Indica il generatore sostituito: è requisito obbligatorio del Conto Termico.'); return; }
       if (pr > 2000) { warn(1,'Potenza superiore al limite incentivabile (2.000 kW).'); return; }
       const quf  = QUF[zona];
@@ -1457,8 +1473,9 @@ function calc(v) {
 
     case 3: {
       const pr = gn('pr3'), sper = gn('sper3'), spermin = gn('spermin3'),
-            zona = g('zona3'), ci = gn('ci3'), spesa = gn('spesa3'), gen = g('gen3');
-      if (!pr||!sper||!spermin||!zona||!ci) { warn(3,'Compila tutti i campi obbligatori.'); return; }
+            zona = g('zona3'), scambio = g('scambio3'), spesa = gn('spesa3'), gen = g('gen3');
+      if (!pr||!sper||!spermin||!zona||!scambio) { warn(3,'Compila tutti i campi obbligatori (inclusa la tipologia di PdC).'); return; }
+      const ci = getCiPDC(scambio, pr);
       if (!gen) { warn(3,'Indica il generatore sostituito: è requisito obbligatorio del Conto Termico.'); return; }
       if (pr > 2000) { warn(3,'Potenza superiore al limite incentivabile (2.000 kW).'); return; }
       const CC = 2.5, quf = QUF[zona];
@@ -1567,9 +1584,10 @@ function calc(v) {
 
     case 8: {
       const pr = gn('pr8'), scop = gn('scop8'), scopmin = gn('scopmin8'),
-            zona = g('zona8'), ci = gn('ci8'), k = gn('k8'),
+            zona = g('zona8'), scambio = g('scambio8'), k = gn('k8'),
             spesa = gn('spesa8'), gen = g('gen8');
-      if (!pr||!scop||!scopmin||!zona||!ci||!k) { warn(8,'Compila tutti i campi obbligatori.'); return; }
+      if (!pr||!scop||!scopmin||!zona||!scambio||!k) { warn(8,'Compila tutti i campi obbligatori (inclusa la tipologia di PdC).'); return; }
+      const ci = getCiPDC(scambio, pr);
       if (!gen) { warn(8,'Indica il generatore sostituito: è requisito obbligatorio del Conto Termico.'); return; }
       if (pr > 2000) { warn(8,'Potenza superiore al limite incentivabile (2.000 kW).'); return; }
       const quf  = QUF[zona];
@@ -1629,14 +1647,28 @@ function calc(v) {
 // ── SELETTORE DATABASE PRODOTTI ──────────────────────────────────────────
 
 const CT3_FIELD_MAP = {
-  1: { pot: 'pr1',  cop: 'scop1', copMin: 'scopmin1', copMinVal: 2.6  },
-  3: { pot: 'pr3',  cop: 'sper3', copMin: 'spermin3', copMinVal: 1.15 },
+  1: { pot: 'pr1',  cop: 'scop1', copMin: 'scopmin1', copMinVal: 2.6,  scambio: 'scambio1' },
+  3: { pot: 'pr3',  cop: 'sper3', copMin: 'spermin3', copMinVal: 1.15, scambio: 'scambio3' },
   4: { pot: 'pn4'  },
   5: { pot: 'pn5'  },
   6: { ag: 'ag6',   qcol: 'qcol6' },
   7: { cap: 'cap7' },
-  8: { pot: 'pr8',  cop: 'scop8', copMin: 'scopmin8', copMinVal: 2.6  },
+  8: { pot: 'pr8',  cop: 'scop8', copMin: 'scopmin8', copMinVal: 2.6,  scambio: 'scambio8' },
 };
+
+// Mappa testo libero "Aria/acqua" → chiave select scambio
+function ct3NormScambio(s) {
+  if (!s) return '';
+  const t = String(s).toLowerCase().replace(/\s+/g,'');
+  if (t.includes('aria/acqua')) return 'aria_acqua';
+  if (t.includes('acqua/aria')) return 'acqua_aria';
+  if (t.includes('acqua/acqua')) return 'acqua_acqua';
+  if (t.includes('salamoia')) return 'salamoia_acqua';
+  if (t.includes('aria/aria')) return 'split_multisplit';
+  if (t.includes('vrf')||t.includes('vrv')) return 'vrf_vrv';
+  if (t.includes('rooftop')) return 'rooftop';
+  return '';
+}
 
 function ct3InitSelectors() {
   // Popola i selettori marca per ogni tipo che li ha
@@ -1722,9 +1754,13 @@ function ct3OnModelloChange(tipo) {
     if (row[4]) noteText += ` · η ${row[4]}%`;
     if (row[6]) noteText += ` · ${row[6]}`;
   } else {
-    // Tipi 1, 3, 8: [modello, potenza_kw, cop, ...]
+    // Tipi 1, 3, 8: [modello, potenza_kw, cop, scambio?, inverter?]
     fill(map.pot, row[1]);
     fill(map.cop, row[2]);
+    if (map.scambio && row[3]) {
+      const key = ct3NormScambio(row[3]);
+      if (key) fill(map.scambio, key);
+    }
     if (map.copMin && map.copMinVal) {
       const el = document.getElementById(map.copMin);
       if (el && !el.value) el.value = map.copMinVal;
