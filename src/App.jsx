@@ -229,7 +229,7 @@ function ContoTermicoPage({ setPage }) {
             </table>
           </div>
           <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700, color: COLORS.darkText, marginBottom: 24 }}>Budget disponibile</h3>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginBottom: 32 }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 20, marginBottom: 48 }}>
             {[{ label: "Privati", value: "500 Mln" }, { label: "P.A.", value: "400 Mln" }, { label: "Totale annuo", value: "900 Mln" }].map((b, i) => (
               <div key={i} style={{ flex: "1 1 140px", textAlign: "center", background: COLORS.paleGreen, border: `1px solid ${COLORS.border}`, borderRadius: 12, padding: "24px 16px" }}>
                 <div style={{ fontFamily: "'Archivo', sans-serif", fontSize: 28, fontWeight: 900, color: COLORS.brandGreen }}>{b.value}</div>
@@ -237,7 +237,29 @@ function ContoTermicoPage({ setPage }) {
               </div>
             ))}
           </div>
-          <AlertBox type="info"><strong>Non cumulabilità:</strong> NON cumulabile con Ecobonus, Bonus Casa, Superbonus o Certificati Bianchi.</AlertBox>
+          <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700, color: COLORS.darkText, marginBottom: 24 }}>I due soggetti della pratica</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 48 }}>
+            <InfoCard icon="🏠" title="Soggetto Ammesso (SA)">Chi ha la <strong>disponibilità giuridica</strong> dell'immobile (proprietario, titolare di altro diritto reale o personale di godimento).</InfoCard>
+            <InfoCard icon="📝" title="Soggetto Responsabile (SR)">Chi <strong>sostiene le spese</strong>, stipula il contratto con il GSE e richiede l'incentivo. Può coincidere col SA o essere una ESCo (UNI CEI 11352), una CER o un soggetto in PPP con la PA.</InfoCard>
+          </div>
+          <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700, color: COLORS.darkText, marginBottom: 24 }}>Modalità di accesso all'incentivo</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 20, marginBottom: 48 }}>
+            <InfoCard icon="⚡" title="Accesso Diretto" accent>
+              <strong>PA, ETS e tutti i Soggetti Privati</strong><br /><br />
+              • Richiesta entro <strong>90 giorni</strong> dalla fine lavori<br />
+              • Erogazione: unica soluzione se ≤ 15.000 € (privati) o qualsiasi importo (PA/ETS non eco.)<br />
+              • Rate da 2 a 5 anni se &gt; 15.000 € (privati)<br /><br />
+              <span style={{ color: COLORS.accentGreen }}>✓ Compatibile con Mandato all'Incasso (sconto in fattura)</span>
+            </InfoCard>
+            <InfoCard icon="📅" title="Accesso con Prenotazione">
+              <strong>Solo PA e ETS</strong> (no mandato all'incasso)<br /><br />
+              • Avvio lavori entro 18 mesi dall'accettazione (caso i) o 90 giorni (casi ii-iv)<br />
+              • Conclusione entro 12 mesi (36 per nZEB)<br />
+              • Erogazione: rata di acconto entro 60 gg + rata intermedia (opz.) + saldo a fine lavori
+            </InfoCard>
+          </div>
+          <AlertBox type="warning"><strong>Imprese ed ETS economici:</strong> devono presentare una <strong>richiesta preliminare</strong> al GSE (Modello 4) prima dell'avvio lavori. Per interventi Titolo II Art. 5 è obbligatoria APE pre/post e riduzione fabbisogno energia primaria ≥ 10%. Vietate apparecchiature a combustibili fossili (incl. gas naturale).</AlertBox>
+          <AlertBox type="info"><strong>Non cumulabilità:</strong> NON cumulabile con Ecobonus, Bonus Casa, Superbonus o Certificati Bianchi. Per la PA è ammessa cumulabilità con fondi in conto capitale (PNRR, FESR) fino al 100%.</AlertBox>
         </div>
       </section>
       <Footer setPage={setPage} />
@@ -256,17 +278,30 @@ function SpesePage({ setPage }) {
             {[{ icon: "🔩", title: "Fornitura e posa", desc: "Acquisto e installazione nuovi impianti" }, { icon: "🗑️", title: "Smontaggio", desc: "Rimozione e smaltimento impianti esistenti" }, { icon: "📐", title: "Prestazioni professionali", desc: "Diagnosi energetica, APE, asseverazioni" }, { icon: "🧱", title: "Opere edili", desc: "Lavori edili necessari all'intervento" }, { icon: "⚙️", title: "Adeguamento impianti", desc: "Modifiche impianti preesistenti" }].map((item, i) => <InfoCard key={i} icon={item.icon} title={item.title}>{item.desc}</InfoCard>)}
           </div>
           <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700, color: COLORS.darkText, marginBottom: 24 }}>Percentuali di incentivo</h3>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginBottom: 40 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginBottom: 24 }}>
             <div style={{ background: COLORS.offWhite, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: "28px 24px" }}>
               <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.darkText, marginBottom: 16 }}>Privati e PA — Titolo III</h4>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText, lineHeight: 1.7 }}>Tetto: <strong>65%</strong>. ≤ 15.000 €: unica soluzione. &gt; 15.000 €: rate annuali. PA/ETS: fino al <strong>100%</strong>.</p>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText, lineHeight: 1.7 }}>Tetto: <strong>65%</strong>. ≤ 15.000 €: unica soluzione. &gt; 15.000 €: rate da 2 a 5 anni. PA e ETS non economici fino al <strong>100%</strong> (scuole, ospedali, piccoli Comuni).</p>
             </div>
             <div style={{ background: COLORS.offWhite, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: "28px 24px" }}>
-              <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.darkText, marginBottom: 16 }}>Imprese — Titolo III</h4>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText, lineHeight: 1.7 }}>Base: <strong>45%</strong>. +20% piccole, +10% medie. Plafond: 150 Mln/anno.</p>
+              <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.darkText, marginBottom: 16 }}>Imprese — Titolo III (Art. 8)</h4>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText, lineHeight: 1.7 }}>Base: <strong>45%</strong> (singolo e multi-intervento). <strong>+20%</strong> piccole imprese, <strong>+10%</strong> medie.<br />Plafond: <strong>150 Mln/anno</strong> · 30 Mln per singolo intervento.<br /><span style={{ color: "#c62828" }}>Obbligo: no combustibili fossili.</span></p>
+            </div>
+            <div style={{ background: COLORS.offWhite, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: "28px 24px" }}>
+              <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.darkText, marginBottom: 16 }}>Imprese — Titolo II (Art. 5)</h4>
+              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText, lineHeight: 1.7 }}><strong>25%</strong> singolo intervento, <strong>30%</strong> multi-intervento.<br />Maggiorazioni: +20% piccole, +10% medie, +15% se miglioramento ≥ 40%, +15% zona assistita lett. A, +5% zona lett. C.<br /><span style={{ color: "#c62828" }}>Obbligo: no combustibili fossili, riduzione energia primaria ≥ 10%.</span></p>
             </div>
           </div>
-          <AlertBox type="warning"><strong>Sempre richiesti:</strong> Certificazione produttore, Conformità D.M. 37/2008, Certificato smaltimento.</AlertBox>
+          <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.darkText, marginBottom: 16, marginTop: 24 }}>Scaldacqua a PdC — confronto CT 2.0 vs 3.0</h3>
+          <div style={{ overflowX: "auto", marginBottom: 32 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'DM Sans', sans-serif", fontSize: 14.5 }}>
+              <thead><tr style={{ background: COLORS.mediumGreen }}>{["Tipologia","CT 2.0","CT 3.0 Classe A","CT 3.0 Classe A+"].map(h => <th key={h} style={{ padding: "12px 16px", color: COLORS.white, textAlign: "left", fontWeight: 600 }}>{h}</th>)}</tr></thead>
+              <tbody>{[["Accumulo < 150 L","400 €","500 €","700 €"],["Accumulo > 150 L","700 €","1.100 €","1.500 €"]].map((row,i)=>(
+                <tr key={i} style={{ background: i%2===0 ? COLORS.white : COLORS.paleGreen }}>{row.map((c,j)=><td key={j} style={{ padding: "11px 16px", borderBottom: `1px solid ${COLORS.border}` }}>{c}</td>)}</tr>
+              ))}</tbody>
+            </table>
+          </div>
+          <AlertBox type="warning"><strong>Sempre richiesti:</strong> Certificazione produttore, Dichiarazione di conformità D.M. 37/2008, Certificato di smaltimento del vecchio generatore, documentazione fotografica (min. 5-7 scatti ante/durante/post operam).</AlertBox>
         </div>
       </section>
       <Footer setPage={setPage} />
@@ -344,7 +379,42 @@ function FatturePage({ setPage }) {
             <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, fontWeight: 700, color: COLORS.mediumGreen, marginBottom: 12 }}>Esempio:</h4>
             <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 13.5, color: COLORS.darkText, background: COLORS.white, borderRadius: 10, padding: "16px 20px", lineHeight: 1.6, wordBreak: "break-word" }}>DM 7 Agosto 2025, Fattura xxxx del gg/mm/aa, S.R. CODICE_FISCALE, Beneficiario PIVA xxxx</div>
           </div>
-          <AlertBox type="info"><strong>Nota:</strong> l'intestatario del conto deve coincidere con l'intestatario della fattura.</AlertBox>
+          <AlertBox type="info"><strong>Nota:</strong> l'intestatario del conto deve coincidere con l'intestatario della fattura. È ammesso anche il conto cointestato.</AlertBox>
+
+          <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 24, fontWeight: 700, color: COLORS.darkText, marginBottom: 24, marginTop: 48 }}>Documentazione necessaria</h3>
+          <div style={{ background: COLORS.offWhite, border: `1px solid ${COLORS.border}`, borderRadius: 16, padding: "28px 24px", marginBottom: 24 }}>
+            <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 16, fontWeight: 700, color: COLORS.darkText, marginBottom: 14 }}>Documenti comuni a tutti gli interventi</h4>
+            <ul style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14.5, color: COLORS.darkText, lineHeight: 2, paddingLeft: 20, margin: 0 }}>
+              <li>Fattura dettagliata con tutti gli elementi richiesti</li>
+              <li>Ricevuta del bonifico ordinario con causale corretta</li>
+              <li>Certificazione del produttore dell'apparecchiatura</li>
+              <li>Dichiarazione di conformità dell'impianto (D.M. 37/2008)</li>
+              <li>Certificato di avvenuto smaltimento del vecchio generatore</li>
+              <li>Documentazione fotografica (min. 5-7 foto ante/durante/post)</li>
+              <li>Asseverazione del tecnico abilitato (Modello 8)</li>
+              <li>Dichiarazione spese sostenute (Modello 9)</li>
+            </ul>
+          </div>
+          <h4 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 17, fontWeight: 700, color: COLORS.darkText, marginBottom: 16 }}>Documenti specifici per tipologia</h4>
+          <div style={{ overflowX: "auto", marginBottom: 24 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: "'DM Sans', sans-serif", fontSize: 14 }}>
+              <thead><tr style={{ background: COLORS.mediumGreen }}>{["Intervento","Documenti specifici"].map(h => <th key={h} style={{ padding: "12px 16px", color: COLORS.white, textAlign: "left", fontWeight: 600 }}>{h}</th>)}</tr></thead>
+              <tbody>{[
+                ["III.A — Pompe di calore","Cert. produttore, smaltimento vecchio gen."],
+                ["III.B — Sistemi ibridi","Cert. produttore, relazione tecnica obbl."],
+                ["III.C — Biomassa","Cert. ambientale (stelle), smaltimento"],
+                ["III.D — Solare termico","Cert. Solar Keymark, schema impianto"],
+                ["III.E — Scaldacqua PdC","Cert. produttore, classe energetica"],
+                ["III.F — Teleriscaldamento","Dichiarazione conformità allaccio"],
+                ["III.G — Microcogenerazione","Cert. produttore, asseverazione PES"],
+              ].map((row,i)=>(
+                <tr key={i} style={{ background: i%2===0 ? COLORS.white : COLORS.paleGreen }}>{row.map((c,j)=><td key={j} style={{ padding: "11px 16px", borderBottom: `1px solid ${COLORS.border}` }}>{c}</td>)}</tr>
+              ))}</tbody>
+            </table>
+          </div>
+          <div style={{ background: COLORS.paleGreen, border: `1px solid ${COLORS.brandGreen}`, borderRadius: 12, padding: "20px 24px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, lineHeight: 1.7, color: COLORS.darkText }}>
+            <strong style={{ color: COLORS.mediumGreen }}>Riepilogo modelli GSE:</strong> Mod. 5 (Delega) · Mod. 6 (Avvio lavori) · Mod. 7 (Fine lavori) · Mod. 8 (Asseverazione) · Mod. 9 (Spese) · Mod. 11 (Pagamento) · Mod. 12 (Mandato incasso) · Mod. 14 (Biomassa) · Mod. 17 (Resp. solidale) · Mod. 18 (Autorizzazione proprietario)
+          </div>
         </div>
       </section>
       <Footer setPage={setPage} />
