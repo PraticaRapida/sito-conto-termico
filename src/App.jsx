@@ -14,7 +14,7 @@ const COLORS = {
   border: "rgba(61,139,55,0.18)",
 };
 
-const pages = { HOME: "home", CONTO_TERMICO: "conto_termico", SPESE: "spese", PRODOTTI: "prodotti", FATTURE: "fatture", MANDATO: "mandato", CARICA: "carica", PREVENTIVO: "preventivo", COSTRUZIONE: "costruzione" };
+const pages = { HOME: "home", CONTO_TERMICO: "conto_termico", SPESE: "spese", PRODOTTI: "prodotti", FATTURE: "fatture", MANDATO: "mandato", PREVENTIVO: "preventivo" };
 
 function LogoImg({ height = 36, style: extra = {} }) {
   return <img src="PRATICARAPIDA.png" alt="PraticaRapida" style={{ height, width: "auto", display: "block", ...extra }} />;
@@ -69,7 +69,7 @@ function Footer({ setPage }) {
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between", marginBottom: 40 }}>
           <div style={{ minWidth: 200 }}>
-            <LogoImg height={24} style={{ filter: "brightness(1.5)" }} />
+            <LogoImg height={24} style={{ filter: "brightness(0) invert(1)" }} />
             <p style={{ color: COLORS.mutedText, fontFamily: "'DM Sans', sans-serif", fontSize: 14, marginTop: 12, lineHeight: 1.6 }}>Gestione pratiche Conto Termico 3.0<br />Chiavi in mano</p>
           </div>
           <div style={{ minWidth: 160 }}>
@@ -160,12 +160,7 @@ function HomePage({ setPage }) {
           </h1>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", color: COLORS.mutedText, maxWidth: 540, margin: "0 auto 48px", lineHeight: 1.6 }}>Gestione pratiche Conto Termico 3.0 chiavi in mano per installatori e impiantisti</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "center" }}>
-            <GreenButton large onClick={() => setPage(pages.CARICA)}>Carica ora la tua pratica →</GreenButton>
-            <button onClick={() => setPage(pages.PREVENTIVO)} style={{ background: COLORS.white, color: COLORS.brandGreen, border: `2px solid ${COLORS.brandGreen}`, borderRadius: 14, padding: "16px 40px", fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 4px 20px rgba(45,90,39,0.1)" }}
-              onMouseEnter={(e) => { e.target.style.background = COLORS.paleGreen; e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = "0 8px 28px rgba(45,90,39,0.18)"; }}
-              onMouseLeave={(e) => { e.target.style.background = COLORS.white; e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "0 4px 20px rgba(45,90,39,0.1)"; }}>
-              Calcola ora il tuo preventivo →
-            </button>
+            <GreenButton large onClick={() => setPage(pages.PREVENTIVO)}>Calcola ora il tuo preventivo →</GreenButton>
           </div>
         </div>
         <div style={{ position: "relative", zIndex: 1, marginTop: 80, display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "center", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s" }}>
@@ -195,11 +190,11 @@ function HomePage({ setPage }) {
         </div>
       </section>
       <section style={{ background: `linear-gradient(135deg, ${COLORS.mediumGreen}, ${COLORS.brandGreen})`, padding: "80px 24px", textAlign: "center" }}>
-        <h2 style={{ fontFamily: "'Archivo', sans-serif", fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 800, color: COLORS.white, marginBottom: 16 }}>Pronto a caricare la tua pratica?</h2>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.8)", marginBottom: 36 }}>Seleziona il prodotto installato e carica la documentazione in pochi clic</p>
-        <button onClick={() => setPage(pages.CARICA)} style={{ background: COLORS.white, color: COLORS.brandGreen, border: "none", borderRadius: 14, padding: "18px 48px", fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
+        <h2 style={{ fontFamily: "'Archivo', sans-serif", fontSize: "clamp(24px, 3.5vw, 38px)", fontWeight: 800, color: COLORS.white, marginBottom: 16 }}>Pronto a calcolare il tuo incentivo?</h2>
+        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.8)", marginBottom: 36 }}>Stima in pochi clic il rimborso del Conto Termico 3.0 per il tuo intervento</p>
+        <button onClick={() => setPage(pages.PREVENTIVO)} style={{ background: COLORS.white, color: COLORS.brandGreen, border: "none", borderRadius: 14, padding: "18px 48px", fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
           onMouseEnter={(e) => e.target.style.transform = "translateY(-2px)"} onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}>
-          Carica ora la tua pratica →
+          Calcola ora il tuo preventivo →
         </button>
       </section>
       <Footer setPage={setPage} />
@@ -397,48 +392,6 @@ function MandatoPage({ setPage }) {
   );
 }
 
-function CaricaPage({ setPage }) {
-  const products = [
-    { code: "III.A", icon: "❄️", title: "Pompe di Calore", desc: "PdC elettriche o a gas per riscaldamento e ACS" },
-    { code: "III.B", icon: "🔄", title: "Sistemi Ibridi", desc: "Factory Made o bivalenti (caldaia + PdC)" },
-    { code: "III.C", icon: "🪵", title: "Generatori Biomassa", desc: "Caldaie, stufe, termocamini" },
-    { code: "III.D", icon: "☀️", title: "Solare Termico", desc: "Impianti solari termici per ACS" },
-    { code: "III.E", icon: "🚿", title: "Scaldacqua a PdC", desc: "Scaldacqua a pompa di calore A+" },
-    { code: "III.F", icon: "🏭", title: "Teleriscaldamento", desc: "Allaccio teleriscaldamento" },
-    { code: "III.G", icon: "⚡", title: "Microcogenerazione", desc: "Impianti < 50 kW rinnovabili" },
-  ];
-  return (
-    <PageContainer>
-      <PageHero title="Carica la tua pratica" subtitle="Seleziona il prodotto installato" />
-      <section style={{ background: COLORS.white, padding: "64px 24px" }}>
-        <div style={{ maxWidth: 1000, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
-            {products.map((p, i) => (
-              <div key={i} style={{ background: COLORS.white, borderRadius: 16, padding: "28px 24px", border: `1px solid ${COLORS.border}`, boxShadow: "0 2px 8px rgba(0,0,0,0.03)", transition: "all 0.3s ease", display: "flex", flexDirection: "column" }}
-                onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(45,90,39,0.1)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.03)"; }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <span style={{ fontSize: 36 }}>{p.icon}</span>
-                  <div><span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, fontWeight: 700, color: COLORS.brandGreen, letterSpacing: "0.08em" }}>{p.code}</span>
-                  <h3 style={{ fontFamily: "'Archivo', sans-serif", fontSize: 18, fontWeight: 700, color: COLORS.darkText, margin: 0 }}>{p.title}</h3></div>
-                </div>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 14.5, color: COLORS.mutedText, lineHeight: 1.6, flex: 1 }}>{p.desc}</p>
-                <button onClick={() => setPage(pages.COSTRUZIONE)}
-                  style={{ marginTop: 20, width: "100%", background: `linear-gradient(135deg, ${COLORS.brandGreen}, ${COLORS.mediumGreen})`, color: COLORS.white, border: "none", borderRadius: 10, padding: "14px 20px", fontFamily: "'DM Sans', sans-serif", fontSize: 14, fontWeight: 700, cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 12px rgba(45,90,39,0.2)" }}
-                  onMouseEnter={(e) => e.target.style.boxShadow = "0 4px 20px rgba(45,90,39,0.35)"}
-                  onMouseLeave={(e) => e.target.style.boxShadow = "0 2px 12px rgba(45,90,39,0.2)"}>
-                  Carica la tua pratica →
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <Footer setPage={setPage} />
-    </PageContainer>
-  );
-}
-
 function PreventivoPage({ setPage }) {
   const iframeRef = useRef(null);
   const [iframeHeight, setIframeHeight] = useState(2400);
@@ -481,20 +434,6 @@ function PreventivoPage({ setPage }) {
   );
 }
 
-function CostruzionePage({ setPage }) {
-  return (
-    <PageContainer>
-      <section style={{ minHeight: "80vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", background: COLORS.white, padding: "0 24px" }}>
-        <div style={{ fontSize: 72, marginBottom: 24 }}>🚧</div>
-        <h1 style={{ fontFamily: "'Archivo', sans-serif", fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 900, color: COLORS.darkText, marginBottom: 16 }}>Sito in costruzione</h1>
-        <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 18, color: COLORS.mutedText, maxWidth: 480, lineHeight: 1.6, marginBottom: 40 }}>Questa funzionalità sarà disponibile a breve.</p>
-        <GreenButton large onClick={() => setPage(pages.HOME)}>← Torna alla home</GreenButton>
-        <div style={{ marginTop: 48, fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: COLORS.mutedText }}><span style={{ color: COLORS.brandGreen }}>praticarapida.it</span> | <span style={{ color: COLORS.brandGreen }}>+39 039 868 2691</span></div>
-      </section>
-    </PageContainer>
-  );
-}
-
 export default function App() {
   const [currentPage, setCurrentPage] = useState(pages.HOME);
   const setPage = (p) => { setCurrentPage(p); window.scrollTo({ top: 0, behavior: "smooth" }); };
@@ -506,9 +445,7 @@ export default function App() {
       case pages.PRODOTTI: return <ProdottiPage setPage={setPage} />;
       case pages.FATTURE: return <FatturePage setPage={setPage} />;
       case pages.MANDATO: return <MandatoPage setPage={setPage} />;
-      case pages.CARICA: return <CaricaPage setPage={setPage} />;
       case pages.PREVENTIVO: return <PreventivoPage setPage={setPage} />;
-      case pages.COSTRUZIONE: return <CostruzionePage setPage={setPage} />;
       default: return <HomePage setPage={setPage} />;
     }
   };
