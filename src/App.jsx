@@ -160,7 +160,7 @@ function HomePage({ setPage }) {
           </h1>
           <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "clamp(16px, 2vw, 20px)", color: COLORS.mutedText, maxWidth: 540, margin: "0 auto 48px", lineHeight: 1.6 }}>Gestione pratiche Conto Termico 3.0 chiavi in mano per installatori e impiantisti</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16, justifyContent: "center" }}>
-            <GreenButton large onClick={() => setPage(pages.PREVENTIVO)}>Calcola ora il tuo preventivo →</GreenButton>
+            <GreenButton large onClick={() => setPage(pages.PREVENTIVO)}>Simula il tuo incentivo →</GreenButton>
           </div>
         </div>
         <div style={{ position: "relative", zIndex: 1, marginTop: 80, display: "flex", flexWrap: "wrap", gap: 24, justifyContent: "center", opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(20px)", transition: "all 0.8s cubic-bezier(0.16,1,0.3,1) 0.3s" }}>
@@ -194,7 +194,7 @@ function HomePage({ setPage }) {
         <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 17, color: "rgba(255,255,255,0.8)", marginBottom: 36 }}>Stima in pochi clic il rimborso del Conto Termico 3.0 per il tuo intervento</p>
         <button onClick={() => setPage(pages.PREVENTIVO)} style={{ background: COLORS.white, color: COLORS.brandGreen, border: "none", borderRadius: 14, padding: "18px 48px", fontFamily: "'DM Sans', sans-serif", fontSize: 18, fontWeight: 700, cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
           onMouseEnter={(e) => e.target.style.transform = "translateY(-2px)"} onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}>
-          Calcola ora il tuo preventivo →
+          Simula il tuo incentivo →
         </button>
       </section>
       <Footer setPage={setPage} />
